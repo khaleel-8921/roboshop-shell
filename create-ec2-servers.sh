@@ -2,7 +2,7 @@
 
 ##### Change these values ###
 ZONE_ID="Z07361783Q1IN0YSDCETT"
-DOMAIN="devopsb999.online"
+DOMAIN="devops999.online"
 SG_NAME="allow-all"
 #############################
 
