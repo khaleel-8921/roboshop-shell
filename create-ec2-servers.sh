@@ -6,8 +6,6 @@ DOMAIN="devops999.online"
 SG_NAME="allow-all"
 #############################
 
-
-
 create_ec2() {
   echo -e '#!/bin/bash' >/tmp/user-data
   echo -e "\nset-hostname ${COMPONENT}" >>/tmp/user-data
@@ -43,7 +41,6 @@ if [ -z "${SGID}" ]; then
   echo "Given Security Group does not exit"
   exit 1
 fi
-
 
 for component in catalogue cart user shipping payment frontend mongodb mysql rabbitmq redis dispatch; do
   COMPONENT="${component}"
