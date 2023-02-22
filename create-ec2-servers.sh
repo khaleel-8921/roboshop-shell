@@ -1,11 +1,9 @@
 #!/bin/bash
-
 ##### Change these values ###
 ZONE_ID="Z07361783Q1IN0YSDCETT"
 DOMAIN="devops999.online"
 SG_NAME="allow-all"
 #############################
-
 create_ec2() {
   echo -e '#!/bin/bash' >/tmp/user-data
   echo -e "\nset-hostname ${COMPONENT}" >>/tmp/user-data
@@ -27,8 +25,6 @@ create_ec2() {
      exit 1
   fi
 }
-
-
 ## Main Program
 AMI_ID=$(aws ec2 describe-images --filters "Name=name,Values=Centos-8-DevOps-Practice" | jq '.Images[].ImageId' | sed -e 's/"//g')
 if [ -z "${AMI_ID}" ]; then
