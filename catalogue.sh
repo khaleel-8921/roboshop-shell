@@ -2,7 +2,7 @@ source common.sh
 
 print_head "configuring nodejs repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
-
+cd /app
 print_head "install nodejs"
 yum install nodejs -y &>>${log_file}
 
