@@ -1,4 +1,4 @@
-common.sh
+source common.sh
 print_head "setup mongod repository"
 cp configs/mongodb.repo /etc/yum.repos.d/mongo.repo
 
