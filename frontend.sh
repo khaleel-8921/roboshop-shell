@@ -13,7 +13,7 @@ cd /usr/share/nginx/html
 unzip /tmp/frontend.zip &>>${log_file}
 
 print_head "copying nginx config for roboshop"
-cp ${code_dir}/nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf &>>${log_file}
+cp ${code_dir}/configs/nginx-roboshop.conf /etc/nginx/default.d/roboshop.conf &>>${log_file}
 
 print_head "Enabling nginx"
 systemctl enable nginx &>>${log_file}
