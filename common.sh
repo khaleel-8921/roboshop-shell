@@ -13,7 +13,7 @@ status_check(){
     echo success
     else
     echo failure
-    exit
+    exit 1
   fi
  }
 
