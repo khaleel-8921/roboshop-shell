@@ -4,9 +4,8 @@ Description = User Service
 User=roboshop
 Environment=MONGO=true
 Environment=REDIS_HOST=redis.devops999.online
-Environment=MONGO_URL="mongodb://redis.devops999.online:27017/users"
+Environment=MONGO_URL="mongodb://mongodb.devops999.online:27017/users"
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=user
-
 [Install]
 WantedBy=multi-user.target
