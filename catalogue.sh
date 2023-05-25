@@ -28,6 +28,7 @@ status_check $?
 print_head "Download App content"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${log_file}
 status_check $?
+cd /app
 
 
 print_head "Extracting the App content"
