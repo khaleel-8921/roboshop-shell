@@ -2,7 +2,10 @@ source common.sh
 
 print_head "configuring nodejs repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
-cd /app
+status_check $?
+
+
+
 print_head "install nodejs"
 yum install nodejs -y &>>${log_file}
 status_check $?
@@ -17,6 +20,7 @@ status_check $?
 print_head "create Application directory"
 if [ ! -d /app ]; then
 mkdir /app &>>${log_file}
+fi
 status_check $?
 
 print_head "Delete old content"
