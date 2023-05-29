@@ -1,3 +1,3 @@
 source common.sh
-component =catalogue
+component=catalogue
 NODEJS
