@@ -17,8 +17,6 @@ status_check(){
  }
 
 NODEJS(){
-
-
 print_head "configuring nodejs repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
 status_check $?
@@ -59,7 +57,7 @@ npm install &>>${log_file}
 status_check $?
 
 print_head "copy systemD service fies"
-cp  ${code_dir}/configs/${component}.service /etc/systemd/system/catalogue.service &>>${log_file}
+cp  ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
 status_check $?
 
 print_head "reload systemD"
@@ -71,7 +69,7 @@ systemctl enable ${component} &>>${log_file}
 status_check $?
 
 print_head "start ${component} service"
-systemctl start ${component}
+systemctl start ${component} &>>${log_file}
 
 print_head "copy MongoDB repo file"
 cp ${code_dir}/configs/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
