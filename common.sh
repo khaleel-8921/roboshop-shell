@@ -16,6 +16,24 @@ status_check(){
   fi
  }
 
+ schema_setup(){
+
+   if [ "${schema_type}" == "mongo" ];then
+   print_head "copy MongoDB repo file"
+   cp ${code_dir}/configs/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+   status_check $?
+
+   print_head "install Mongo client"
+   yum install mongodb-org-shell -y &>>${log_file}
+   status_check $?
+
+   print_head "Load schema"
+   mongo --host mongodb.devops999.online </app/schema/${component}.js &>>${log_file}
+   status_check $?
+   fi
+
+ }
+
 nodejs() {
 print_head "configuring nodejs repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
@@ -70,17 +88,8 @@ status_check $?
 
 print_head "start ${component} service"
 systemctl start ${component} &>>${log_file}
-
-print_head "copy MongoDB repo file"
-cp ${code_dir}/configs/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
 status_check $?
 
-print_head "install Mongo client"
-yum install mongodb-org-shell -y &>>${log_file}
-status_check $?
-
-print_head "Load schema"
-mongo --host mongodb.devops999.online </app/schema/${component}.js &>>${log_file}
-status_check $?
+schema_setup
 
 }
