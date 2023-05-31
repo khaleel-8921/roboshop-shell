@@ -23,7 +23,9 @@ print_head "start mysqlr service"
 systemctl start mysqld &>>${log_file}
 status_check $?
 
+if [ $? -ne 0 ]; then
 print_head "set root password"
 mysql_secure_installation --set-root-pass ${mysql_root_password}
+fi
 status_check $?
 

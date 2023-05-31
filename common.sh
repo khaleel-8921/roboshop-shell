@@ -30,7 +30,18 @@ status_check(){
    print_head "Load schema"
    mongo --host mongodb.devops999.online </app/schema/${component}.js &>>${log_file}
    status_check $?
-   fi
+
+   elif [ "${schema_type}" == "mysql" ]; then
+     print_head "install Mysql Client"
+     yum install mysql -y &>>${log_file}
+     status_check $?
+
+
+     print_head "load schema"
+     mysql -h mysql.devops999.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
+     status_check $?
+
+
 
  }
 
@@ -90,5 +101,26 @@ print_head "start ${component} service"
 systemctl start ${component} &>>${log_file}
 status_check $?
 schema_setup
+}
+java(){
+
+  print_head "install maven"
+  yum install maven -y &>>${log_file}
+  status_check $?
+
+  print_head "add user roboshop"
+  useradd roboshop
+  status_check $?
+
+   app_prereq_setup
+  print_head "Downloading dependencies and packages"
+  mvn clean package &>>${log_file}
+  mv target/${component}-0.1.jar ${component}.jar &>>${log_file}
+  status_check $?
+
+  #schema setup Function
+  schema_setup
+
+
 
 }
