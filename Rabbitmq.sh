@@ -3,7 +3,7 @@ source common.sh
 roboshop_app_pass=$1
 
 if [ -z "${roboshop_app_pass}" ]; then
-  echo -e "\e[31m Missing mysql_root_password argument\e[0m"
+  echo -e "\e[31m Missing  Rabbitma user password assword argument\e[0m"
   exit 1
 fi
  print_head "setup Erlag repos"
@@ -27,7 +27,10 @@ fi
  status_check $?
 
  print_head "add Application user"
+ rabbitmqctl list_user | grep roboshop &>>{log_file}
+ if [ $? -ne 0 ]; then
  rabbitmqctl add_user roboshop {roboshop_app_pass} &>>${log_file}
+ fi
  status_check $?
 
  print_head "configuer permession for app user"
