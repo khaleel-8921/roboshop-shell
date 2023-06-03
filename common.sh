@@ -39,20 +39,20 @@ status_check(){
  schema_setup() {
 
    if [ "${schema_type}" == "mongo" ];then
-   print_head "copy MongoDB repo file"
-   cp ${code_dir}/configs/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
-   status_check $?
+       print_head "copy MongoDB repo file"
+       cp ${code_dir}/configs/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+       status_check $?
 
-   print_head "install Mongo client"
-   yum install mongodb-org-shell -y &>>${log_file}
-   status_check $?
+       print_head "install Mongo client"
+       yum install mongodb-org-shell -y &>>${log_file}
+       status_check $?
 
-   print_head "Load schema"
-   mongo --host mongodb.devops999.online </app/schema/${component}.js &>>${log_file}
-   status_check $?
+       print_head "Load schema"
+       mongo --host mongodb.devops999.online </app/schema/${component}.js &>>${log_file}
+       status_check $?
 
    elif [ "${schema_type}" == "mysql" ]; then
-     print_head "install Mysql Client"
+       print_head "install Mysql Client"
      yum install mysql -y &>>${log_file}
      status_check $?
 
@@ -64,7 +64,7 @@ status_check(){
  }
 app_prereq_setup(){
   print_head "create roboshop User"
-  id roboshop &>>${log_file} &>>${log_file}
+  id roboshop &>>${log_file}
   if [ $? -ne 0 ]; then
      useradd roboshop &>>${log_file}
    fi
