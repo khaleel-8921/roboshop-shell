@@ -40,7 +40,13 @@ status_check(){
      print_head "load schema"
      mysql -h mysql.devops999.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
      status_check $?
+     fi
  }
+
+
+
+
+
 
 nodejs() {
 print_head "configuring nodejs repo"
@@ -51,13 +57,14 @@ print_head "install nodejs"
 yum install nodejs -y &>>${log_file}
 status_check $?
 
-print_head "create roboshop User"
-id roboshop &>>${log_file}
+app_prereq_setup(){
 
-if [ $? -ne 0 ]; then
-useradd roboshop &>>${log_file}
-fi
-status_check $?
+  print_head "create roboshop User"
+  id roboshop &>>${log_file} &>>${log_file}
+  if [ $? -ne 0 ]; then
+     useradd roboshop &>>${log_file}
+   fi
+   status_check $?
 
 print_head "create Application directory"
 if [ ! -d /app ]; then
@@ -115,7 +122,6 @@ java(){
   mvn clean package &>>${log_file}
   mv target/${component}-0.1.jar ${component}.jar &>>${log_file}
   status_check $?
-
   #schema setup Function
   schema_setup
 }
