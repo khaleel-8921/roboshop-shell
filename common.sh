@@ -16,6 +16,26 @@ status_check(){
   fi
  }
 
+ systemD_setup(){
+
+   print_head "copy systemD service fies"
+   cp  ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
+   status_check $?
+
+   print_head "reload systemD"
+   systemctl daemon-reload &>>${log_file}
+   status_check $?
+
+   print_head "enable ${component} service"
+   systemctl enable ${component} &>>${log_file}
+   status_check $?
+
+   print_head "start ${component} service"
+   systemctl start ${component} &>>${log_file}
+   status_check $?
+
+ }
+
  schema_setup() {
 
    if [ "${schema_type}" == "mongo" ];then
@@ -42,23 +62,7 @@ status_check(){
      status_check $?
      fi
  }
-
-
-
-
-
-
-nodejs() {
-print_head "configuring nodejs repo"
-curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
-status_check $?
-
-print_head "install nodejs"
-yum install nodejs -y &>>${log_file}
-status_check $?
-
 app_prereq_setup(){
-
   print_head "create roboshop User"
   id roboshop &>>${log_file} &>>${log_file}
   if [ $? -ne 0 ]; then
@@ -84,26 +88,25 @@ cd /app
 print_head "Extracting the App content"
 unzip /tmp/${component}.zip &>>${log_file}
 status_check $?
+}
+
+
+nodejs() {
+print_head "configuring nodejs repo"
+curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
+status_check $?
+
+print_head "install nodejs"
+yum install nodejs -y &>>${log_file}
+status_check $?
+
+app_prereq_setup
 
 print_head "install the nidejs dependencies"
 npm install &>>${log_file}
 status_check $?
 
-print_head "copy systemD service fies"
-cp  ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
-status_check $?
-
-print_head "reload systemD"
-systemctl daemon-reload &>>${log_file}
-status_check $?
-
-print_head "enable ${component} service"
-systemctl enable ${component} &>>${log_file}
-status_check $?
-
-print_head "start ${component} service"
-systemctl start ${component} &>>${log_file}
-status_check $?
+systemD_setup
 schema_setup
 }
 
@@ -113,15 +116,17 @@ java(){
   yum install maven -y &>>${log_file}
   status_check $?
 
-  print_head "add user roboshop"
-  useradd roboshop
-  status_check $?
+  app_prereq_setup
 
-   app_prereq_setup
   print_head "Downloading dependencies and packages"
   mvn clean package &>>${log_file}
   mv target/${component}-0.1.jar ${component}.jar &>>${log_file}
   status_check $?
+
   #schema setup Function
   schema_setup
+
+ # systemD setup Function
+  systemD_setup
+
 }
