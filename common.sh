@@ -16,7 +16,7 @@ status_check(){
   fi
  }
 
- schema_setup(){
+ schema_setup() {
 
    if [ "${schema_type}" == "mongo" ];then
    print_head "copy MongoDB repo file"
@@ -40,9 +40,6 @@ status_check(){
      print_head "load schema"
      mysql -h mysql.devops999.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
      status_check $?
-
-
-
  }
 
 nodejs() {
@@ -102,6 +99,7 @@ systemctl start ${component} &>>${log_file}
 status_check $?
 schema_setup
 }
+
 java(){
 
   print_head "install maven"
@@ -120,7 +118,4 @@ java(){
 
   #schema setup Function
   schema_setup
-
-
-
 }
