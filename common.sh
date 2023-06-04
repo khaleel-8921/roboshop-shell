@@ -120,7 +120,7 @@ java(){
 
   print_head "Downloading dependencies and packages"
   mvn clean package &>>${log_file}
-  mv target/${component}-0.1.jar ${component}.jar &>>${log_file}
+  mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
   status_check $?
 
   #schema setup Function
