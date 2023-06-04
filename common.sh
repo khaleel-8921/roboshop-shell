@@ -122,11 +122,8 @@ java(){
   mvn clean package &>>${log_file}
   mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
   status_check $?
-
   #schema setup Function
   schema_setup
-
  # systemD setup Function
   systemD_setup
-
 }
