@@ -6,6 +6,7 @@ if [ -z "${roboshop_app_pass}" ]; then
   echo -e "\e[31m Missing  Rabbitma user password assword argument\e[0m"
   exit 1
 fi
+
  print_head "setup Erlag repos"
  curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>>${log_file}
  status_check $?

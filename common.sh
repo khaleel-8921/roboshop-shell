@@ -22,6 +22,10 @@ status_check(){
    cp  ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
    status_check $?
 
+   sed -i -e "s/ROBOSHOP_USER_PASSWORD/${roboshop_app_password}/" /etc/systemd/system/${component}.service &>>${log_file}
+
+
+
    print_head "reload systemD"
    systemctl daemon-reload &>>${log_file}
    status_check $?
@@ -121,6 +125,22 @@ java(){
   print_head "Downloading dependencies and packages"
   mvn clean package &>>${log_file}
   mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
+  status_check $?
+  #schema setup Function
+  schema_setup
+ # systemD setup Function
+  systemD_setup
+}
+python(){
+
+  print_head "install maven"
+  yum install python36 gcc python3-devel -y &>>${log_file}
+  status_check $?
+
+  app_prereq_setup
+
+  print_head "Downloading dependencies"
+  pip3.6 install -r requirements.txt &>>${log_file}
   status_check $?
   #schema setup Function
   schema_setup

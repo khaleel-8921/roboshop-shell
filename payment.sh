@@ -1,4 +1,10 @@
 source common.sh
-component=user
+
+mysql_root_password=$1
+if [ -z "${mysql_root_password}" ]; then
+  echo -e "\e[31m Missing mysql_root_password argument\e[0m"
+  exit 1
+fi
+component=payment
 schema_type=mongo
-nodejs
+python
