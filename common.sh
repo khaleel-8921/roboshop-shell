@@ -16,7 +16,7 @@ status_check(){
   fi
  }
 
- systemD_setup(){
+ systemd_setup(){
 
    print_head "copy systemD service fies"
    cp  ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
@@ -108,8 +108,9 @@ print_head "install the nidejs dependencies"
 npm install &>>${log_file}
 status_check $?
 
-systemD_setup
 schema_setup
+systemd_setup
+
 }
 
 java(){
@@ -125,7 +126,7 @@ java(){
   #schema setup Function
   schema_setup
  # systemD setup Function
-  systemD_setup
+  systemd_setup
 }
 
 python(){
@@ -137,7 +138,5 @@ python(){
   pip3.6 install -r requirements.txt &>>${log_file}
   status_check $?
   #schema setup Function
-  schema_setup
- # systemD setup Function
-  systemD_setup
+  systemd_setup
 }
