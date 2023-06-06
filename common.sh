@@ -60,7 +60,7 @@ status_check(){
 
 
      print_head "load schema"
-     mysql -h mysql.devops999.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
+     mysql -h mysql.devops999.online -uroot -pRoboshop@1 < /app/schema/shipping.sql &>>${log_file}
      status_check $?
      fi
  }
