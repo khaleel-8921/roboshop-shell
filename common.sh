@@ -127,6 +127,7 @@ java(){
  # systemD setup Function
   systemD_setup
 }
+
 python(){
   print_head "install maven"
   yum install python36 gcc python3-devel -y &>>${log_file}

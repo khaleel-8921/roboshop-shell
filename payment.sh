@@ -6,5 +6,4 @@ if [ -z "${mysql_root_password}" ]; then
   exit 1
 fi
 component=payment
-schema_type=mongo
 python
