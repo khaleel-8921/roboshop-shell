@@ -42,7 +42,7 @@ status_check(){
 
    if [ "${schema_type}" == "mongo" ];then
        print_head "copy MongoDB repo file"
-       cp ${code_dir}/configs/mongo.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+       cp ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
        status_check $?
 
        print_head "install Mongo client"
