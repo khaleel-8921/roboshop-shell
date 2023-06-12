@@ -101,13 +101,11 @@ status_check $?
 print_head "install nodejs"
 yum install nodejs -y &>>${log_file}
 status_check $?
-
 app_prereq_setup
 
 print_head "install the nidejs dependencies"
 npm install &>>${log_file}
 status_check $?
-
 schema_setup
 systemd_setup
 
@@ -119,10 +117,12 @@ java(){
   yum install maven -y &>>${log_file}
   status_check $?
   app_prereq_setup
+
   print_head "Downloading dependencies and packages"
   mvn clean package &>>${log_file}
   mv target/${component}-1.0.jar ${component}.jar &>>${log_file}
   status_check $?
+
   #schema setup Function
   schema_setup
  # systemD setup Function
