@@ -20,6 +20,7 @@ status_check(){
 
    print_head "copy systemD service fies"
    cp  ${code_dir}/configs/${component}.service /etc/systemd/system/${component}.service &>>${log_file}
+
    status_check $?
 
    sed -i -e "s/ROBOSHOP_USER_PASSWORD/${roboshop_app_password}/" /etc/systemd/system/${component}.service &>>${log_file}
@@ -42,7 +43,7 @@ status_check(){
 
    if [ "${schema_type}" == "mongo" ];then
        print_head "copy MongoDB repo file"
-       cp ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
+        cp ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${log_file}
        status_check $?
 
        print_head "install Mongo client"
@@ -57,7 +58,6 @@ status_check(){
        print_head "install Mysql Client"
      yum install mysql -y &>>${log_file}
      status_check $?
-
 
      print_head "load schema"
      mysql -h mysql.devops999.online -uroot -p${mysql_root_password} < /app/schema/shipping.sql &>>${log_file}
@@ -106,7 +106,9 @@ app_prereq_setup
 print_head "install the nidejs dependencies"
 npm install &>>${log_file}
 status_check $?
+
 schema_setup
+
 systemd_setup
 
 }
